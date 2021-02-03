@@ -14,12 +14,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
-        {
+
             String accountTablequery = "CREATE TABLE account_table (account_no TEXT PRIMARY KEY, bank_name TEXT NOT NULL, account_holder_name TEXT NOT NULL, balance REAL NOT NULL)";
             String transactionTablequery = "CREATE TABLE transaction_table (id INTEGER PRIMARY KEY AUTOINCREMENT, date TEXT NOT NULL, account_no TEXT NOT NULL, expense_type TEXT NOT NULL, amount REAL NOT NULL, FOREIGN KEY(account_no) REFERENCES account_table(account_no))";
             sqLiteDatabase.execSQL(accountTablequery);
             sqLiteDatabase.execSQL(transactionTablequery);
-        }
+
     }
 
     @Override

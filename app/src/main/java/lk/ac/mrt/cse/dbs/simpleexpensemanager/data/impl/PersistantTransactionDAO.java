@@ -51,7 +51,7 @@ public class PersistantTransactionDAO implements TransactionDAO  {
         values.put(AMOUNT,amount);
 
         long ret = db.insert(TRANSACTION_TABLE, null, values);
-
+        db.close();
     }
 
     @Override

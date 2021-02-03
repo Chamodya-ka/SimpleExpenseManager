@@ -88,10 +88,16 @@ public class PersistantAccountDAO  implements AccountDAO {
             double balance = cursor.getDouble(3);
 
             Account acc = new Account(acnNo,bankName,userName,balance);
+            cursor.close();
+            db.close();
             return acc;
+
         }
+
         String msg = "Account " + accountNo + " is invalid.";
         throw new InvalidAccountException(msg);
+
+
    }
 
     @Override
@@ -106,13 +112,13 @@ public class PersistantAccountDAO  implements AccountDAO {
         values.put(BALANCE,account.getBalance());
 
         long ret = db.insert("ACCOUNT_TABLE", null, values);
-
+        db.close();
     }
 
     @Override
     public void removeAccount(String accountNo) throws InvalidAccountException {
         //SQLiteDatabase db = this.getWritableDatabase();
-        SQLiteDatabase db = dh.getReadableDatabase();
+        SQLiteDatabase db = dh.getWritableDatabase();
         String query = "DELETE FROM " + ACCOUNT_TABLE + " WHERE " +ACCOUNT_NO+ " = " + accountNo;
         Cursor cursor = db.rawQuery(query, null);
         cursor.close();
@@ -143,6 +149,7 @@ public class PersistantAccountDAO  implements AccountDAO {
         String query2 = "UPDATE "+ACCOUNT_TABLE+ " SET " +BALANCE +" = "+ Double.toString(balance) +" WHERE "+ ACCOUNT_NO+ " = "+ accountNo;
         Cursor cursor1 =db.rawQuery(query2,null);
         cursor1.close();
+        cursor.close();
         db.close();
     }
 
